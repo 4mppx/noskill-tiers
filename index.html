@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NoSkill Tiers · 1.8.9</title>
+<style>
+:root{color-scheme:dark;--bg:#0e0f13;--surf:#171a21;--surf2:#20242d;--tx:#f4ead9;--mut:#8f93a1;--line:#2a2f3a;--acc:#f29a3c;
+--t1:#ffc233;--t2:#b9c4d6;--t3:#d98445;--t4:#46c48a;--t5:#5f8ff0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--tx);font:15px/1.4 "Trebuchet MS","Segoe UI",system-ui,sans-serif;
+background:radial-gradient(700px 360px at 50% -80px,color-mix(in srgb,var(--acc) 22%,transparent),transparent 70%),radial-gradient(500px 300px at 100% 20%,#5f8ff01a,transparent 70%),var(--bg);min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 48px}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:36px 0 22px}
+.logo{width:108px;height:108px;border-radius:50%;padding:4px;background:conic-gradient(var(--acc),var(--t1),var(--acc));box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 14%,transparent),0 10px 40px color-mix(in srgb,var(--acc) 33%,transparent)}
+.logo img{width:100%;height:100%;border-radius:50%;display:block;background:#fff;image-rendering:auto}
+h1{margin:16px 0 0;font:900 clamp(34px,9vw,58px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;text-shadow:0 4px 24px color-mix(in srgb,var(--acc) 40%,transparent)}
+h1 span{color:var(--acc)}
+.ver{display:inline-block;margin-top:10px;padding:4px 14px;border-radius:99px;background:var(--surf2);border:1px solid var(--line);font-weight:800;color:var(--acc)}
+.stats{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap}
+.st{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:8px 18px;text-align:center;min-width:96px}
+.st b{display:block;font:900 22px Impact,"Arial Black",sans-serif;color:var(--acc)}
+.st small{color:var(--mut)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.bar input{flex:1;min-width:160px;padding:11px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surf);color:var(--tx);font:inherit}
+.seg{display:flex;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;color:var(--mut);font:inherit;font-weight:700;padding:8px 16px;border-radius:9px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--acc);color:#1b1206}
+button:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.pod{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:10px;align-items:end;margin-bottom:16px}
+.pc{background:linear-gradient(180deg,var(--d,var(--surf2)),var(--surf));border:1px solid var(--line);border-top:3px solid var(--c);border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 8px 30px -12px var(--c)}
+.pc.p1{padding-top:22px;padding-bottom:20px}
+.pc .n{font:900 20px Impact,"Arial Black",sans-serif;color:var(--c)}
+.pc .av{margin:6px auto;width:54px;height:54px;font-size:24px;border-radius:12px;box-shadow:0 0 0 3px var(--c)}
+.pc .nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;background:var(--surf);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:12px;padding:10px 14px;margin-bottom:8px;background-image:linear-gradient(90deg,var(--d,transparent),transparent 70%)}
+.rk{font:900 22px Impact,"Arial Black",sans-serif;color:var(--mut);text-align:center}
+.who{display:flex;align-items:center;gap:12px;min-width:0}
+.av{width:40px;height:40px;border-radius:10px;flex:none;display:grid;place-items:center;color:#fff;font-weight:900;font-size:17px;text-shadow:0 1px 3px #0008}
+.nm{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pts{color:var(--mut);font-size:13px}
+.badge{font-weight:900;font-size:13px;padding:6px 12px;border-radius:99px;color:var(--tx,#1b1206);background:var(--c);min-width:52px;text-align:center;box-shadow:0 0 16px -2px var(--c)}
+.cols{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.col{background:linear-gradient(180deg,var(--d),var(--surf) 60%);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.col h3{margin:0;padding:12px 14px;color:var(--tx,#1b1206);background:var(--c);font:900 22px Impact,"Arial Black",sans-serif}
+.col ul{list-style:none;margin:0;padding:6px 0}
+.col li{padding:6px 14px;display:flex;align-items:center;gap:8px}
+.col li small{color:var(--c);font-weight:800;margin-left:auto}
+.col .av{width:28px;height:28px;font-size:13px;border-radius:7px}
+.empty{padding:28px;text-align:center;color:var(--mut)}
+footer{margin-top:28px;color:var(--mut);font-size:13px;text-align:center}
+@media(max-width:480px){.pc .av{width:42px;height:42px;font-size:19px}.pc .n{font-size:17px}}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.themes{display:flex;justify-content:center;align-items:center;gap:10px;margin:0 0 18px;flex-wrap:wrap}
+.sws{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}.sw{width:34px;height:34px;border-radius:50%;border:3px solid var(--surf);background:var(--c);cursor:pointer;box-shadow:0 0 0 1px var(--line)}.sw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--tx)}
+.adm{border:1px solid var(--line);background:var(--surf);color:var(--mut);font:inherit;font-weight:700;padding:8px 16px;border-radius:12px;cursor:pointer}
+#panel{background:var(--surf);border:1px solid var(--line);border-top:3px solid var(--acc);border-radius:14px;padding:16px;margin-bottom:16px}
+#panel h2{margin:0 0 12px;font:900 22px Impact,"Arial Black",sans-serif}
+.frm{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+#panel input,#panel select{padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surf2);color:var(--tx);font:inherit}
+#panel input{flex:1;min-width:140px}
+.btn{border:0;background:var(--acc);color:#1b1206;font:inherit;font-weight:800;padding:9px 16px;border-radius:10px;cursor:pointer}
+.btn.sec{background:var(--surf2);color:var(--tx)}.btn.dng{background:#7a2a2a;color:#fff;padding:6px 12px}
+.alist{max-height:320px;overflow:auto;margin:8px 0}
+.arow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="wrap">
+<header class="hero">
+  <div class="logo"><img src="logo.png" alt="Logo de NoSkill"></div>
+  <h1>NO<span>SKILL</span> TIERS</h1>
+  <div class="ver">Minecraft 1.8.9</div>
+</header>
+<div class="stats" id="stats"></div>
+<div class="themes" id="themes"></div>
+<div class="bar">
+  <input id="q" type="search" placeholder="Buscar jugador" aria-label="Buscar jugador">
+  <div class="seg" role="group" aria-label="Vista">
+    <button id="vList" aria-pressed="true">Ranking</button>
+    <button id="vTier" aria-pressed="false">Por tier</button>
+  </div>
+  <button class="adm" id="adm">Admin</button>
+</div>
+<section id="panel" hidden></section>
+<main id="out"></main>
+<footer>Página hecha por 4mp con ayuda de la IA</footer>
+</div>
+<script src="jugadores.js"></script>
+<script src="config.js"></script>
+<script>
+const THEMES=[["Gris",-1],["Naranja",32],["Rojo",355],["Rosa",325],["Morado",270],["Azul",215],["Celeste",190],["Verde",150],["Amarillo",48]];
+let curTheme=-1;try{const s=parseFloat(localStorage.getItem("ns_theme"));if(!isNaN(s))curTheme=s}catch(e){}
+function applyTheme(h){curTheme=h;const r=document.documentElement.style;r.setProperty("--acc",`hsl(${h} ${sat(85)}% 60%)`);[72,63,56,50,46].forEach((l,i)=>r.setProperty("--t"+(i+1),`hsl(${h} ${sat(85)}% ${l}%)`));try{localStorage.setItem("ns_theme",h)}catch(e){}drawBg();drawThemes()}
+function sat(v){return curTheme<0?0:v}
+let rt;
+function drawBg(){
+  const c=document.getElementById("bg");if(!c)return;
+  const dpr=Math.min(devicePixelRatio||1,2),W=innerWidth,H=innerHeight;
+  c.width=W*dpr;c.height=H*dpr;const x=c.getContext("2d");x.scale(dpr,dpr);
+  let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;
+  const S=Math.max(70,Math.round(W/12)),RH=S*0.866,cols=Math.ceil(W/S)+2,rows=Math.ceil(H/RH)+2,P=[];
+  for(let r=0;r<=rows;r++){P[r]=[];for(let k=0;k<=cols;k++)P[r][k]=[(k-1)*S+(r%2?S/2:0)+(rnd()-.5)*S*.35,(r-1)*RH+(rnd()-.5)*RH*.35]}
+  const tri=(a,b,d)=>{
+    const cx=(a[0]+b[0]+d[0])/3,cy=(a[1]+b[1]+d[1])/3;
+    const g=Math.max(0,1-Math.hypot(cx-W/2,cy)/(Math.max(W,H)*.75));
+    const l=4+rnd()*11+g*g*16,h=curTheme+(rnd()-.5)*16;
+    x.fillStyle=`hsl(${h} ${sat(70)}% ${l}%)`;x.strokeStyle=`hsl(${h} ${sat(70)}% ${l+3}%)`;x.lineWidth=.6;
+    x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.lineTo(d[0],d[1]);x.closePath();x.fill();x.stroke();
+  };
+  for(let r=0;r<rows;r++)for(let k=0;k<cols;k++){
+    const A=P[r][k],B=P[r][k+1],C=P[r+1][k],D=P[r+1][k+1];
+    if(r%2){tri(A,C,D);tri(A,B,D)}else{tri(A,B,C);tri(B,D,C)}
+  }
+}
+addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(drawBg,150)});
+function drawThemes(){const t=document.getElementById("themes");t.innerHTML=`<span class="pts">Color</span><div class="sws">${THEMES.map(([n,h])=>`<button class="sw" style="--c:hsl(${h} ${h<0?0:85}% 60%)" data-h="${h}" title="${n}" aria-label="${n}" aria-pressed="${h===curTheme}"></button>`).join("")}</div>`;t.querySelectorAll(".sw").forEach(b=>b.onclick=()=>{applyTheme(+b.dataset.h);render()})}
+const PTS={HT1:60,LT1:44,HT2:28,LT2:16,HT3:10,LT3:6,HT4:4,LT4:3,HT5:2,LT5:1};
+const TIERS=Object.keys(PTS);
+const sh=t=>{const l=76-TIERS.indexOf(t)*4;return{c:`hsl(${curTheme} ${sat(85)}% ${l}%)`,d:`hsl(${curTheme} ${sat(55)}% ${Math.round(l*0.4)}%)`,tx:l>=54?"#1b1206":"#fff"}};
+const sty=t=>{const s=sh(t);return `--c:${s.c};--d:${s.d};--tx:${s.tx}`};
+const num=t=>+t[2];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function load(){return DEFAULT.map(x=>x.slice())}
+let adminPw="";
+async function api(path,opt){const r=await fetch(CFG.url+"/rest/v1/"+path,{...opt,headers:{apikey:CFG.key,Authorization:"Bearer "+CFG.key,"Content-Type":"application/json"}});const tx=await r.text();if(!r.ok)throw new Error(tx);return tx?JSON.parse(tx):null}
+async function pull(){if(!CFG.url)return;try{const a=await api("ranking?id=eq.1&select=data");if(a&&a[0]&&Array.isArray(a[0].data)){players=a[0].data;calc();render();drawPanel()}}catch(e){}}
+async function save(){let msg="Guardado para todos.";if(!CFG.url)msg="Falta configurar config.js (ver LEEME).";else try{await api("rpc/guardar",{method:"POST",body:JSON.stringify({pw:adminPw,nuevos:players})})}catch(e){msg="No se pudo guardar."}const m=$("msg");if(m)m.textContent=msg}
+let players=load(),data=[],view="list",admin=false,open=false;
+const out=$("out"),q=$("q"),panel=$("panel");
+function calc(){
+  data=players.map(([n,t])=>({n,t,p:PTS[t]})).sort((a,b)=>b.p-a.p||a.n.localeCompare(b.n)).map((d,i)=>({...d,rank:i+1}));
+  $("stats").innerHTML=`<div class="st"><b>${data.length}</b><small>Jugadores</small></div><div class="st"><b>${data.filter(d=>num(d.t)===1).length}</b><small>En Tier 1</small></div><div class="st"><b>${new Set(data.map(d=>d.t)).size}</b><small>Tiers activos</small></div>`;
+}
+const av=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return `<div class="av" style="background:linear-gradient(135deg,hsl(${(curTheme+h%50-25+360)%360} ${sat(60)}% 48%),hsl(${(curTheme+h%50+15+360)%360} ${sat(60)}% 30%))">${esc(n[0].toUpperCase())}</div>`};
+function podium(){
+  const t=data.slice(0,3);if(t.length<3)return"";
+  const card=(d,c)=>`<div class="pc p${d.rank}" style="${sty(d.t)}"><div class="n">#${d.rank}</div>${av(d.n)}<div class="nm">${esc(d.n)}</div><div class="pts">${d.t}</div></div>`;
+  return `<div class="pod">${card(t[1],"var(--t2)")}${card(t[0],"var(--t1)")}${card(t[2],"var(--t3)")}</div>`;
+}
+function render(){
+  const f=q.value.trim().toLowerCase();
+  const rows=data.filter(d=>d.n.toLowerCase().includes(f));
+  if(!rows.length){out.innerHTML=`<div class="empty">${data.length?"No hay jugadores con ese nombre.":"Todavía no hay jugadores. Entra al admin para añadir."}</div>`;return}
+  if(view==="list"){
+    out.innerHTML=(f?"":podium())+rows.map(d=>`<div class="row" style="${sty(d.t)}"><div class="rk">${d.rank}</div><div class="who">${av(d.n)}<div style="min-width:0"><div class="nm">${esc(d.n)}</div></div></div><div class="badge">${d.t}</div></div>`).join("");
+  }else{
+    let h='<div class="cols">';
+    for(let k=1;k<=5;k++){
+      const ls=rows.filter(d=>num(d.t)===k);
+      h+=`<section class="col" style="${sty(TIERS[2*(k-1)])}"><h3>Tier ${k}</h3><ul>`+
+        (ls.length?ls.map(d=>`<li>${av(d.n)}<span class="nm">${esc(d.n)}</span><small style="color:${sh(d.t).c}">${d.t}</small></li>`).join(""):'<li><small style="color:var(--mut)">Vacío</small></li>')+"</ul></section>";
+    }
+    out.innerHTML=h+"</div>";
+  }
+}
+const opts=sel=>TIERS.map(t=>`<option${t===sel?" selected":""}>${t}</option>`).join("");
+function refresh(){calc();render();drawPanel()}
+function drawPanel(){
+  panel.hidden=!open;if(!open)return;
+  if(!admin){
+    panel.innerHTML=`<h2>Acceso admin</h2><form id="lg" class="frm"><input id="pw" type="password" placeholder="Contraseña" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Contraseña"><button class="btn">Entrar</button></form><p id="err" class="pts"></p>`;
+    $("lg").onsubmit=async e=>{e.preventDefault();const p=$("pw").value.trim();let ok=false;try{ok=CFG.url?(await api("rpc/verificar",{method:"POST",body:JSON.stringify({pw:p})}))===true:false}catch(x){}if(ok){adminPw=p;admin=true;drawPanel()}else{$("err").textContent=CFG.url?"Contraseña incorrecta.":"Falta configurar config.js (ver LEEME).";$("pw").value=""}};
+    return;
+  }
+  panel.innerHTML=`<h2>Panel de admin</h2>
+  <form id="ad" class="frm"><input id="nn" placeholder="Nick del jugador" maxlength="20" aria-label="Nick"><select id="nt" aria-label="Tier">${opts("LT5")}</select><button class="btn">Añadir</button></form>
+  <div class="alist">${players.map((p,i)=>`<div class="arow"><span class="nm">${esc(p[0])}</span><select data-i="${i}" aria-label="Tier de ${esc(p[0])}">${opts(p[1])}</select><button class="btn dng" data-d="${i}" aria-label="Borrar ${esc(p[0])}">Borrar</button></div>`).join("")||'<div class="empty">Aún no hay jugadores.</div>'}</div>
+  <div class="frm"><button class="btn sec" id="lo">Salir del admin</button></div>
+  <p class="pts" id="msg">Los cambios se guardan para todos automáticamente.</p>`;
+  $("ad").onsubmit=e=>{e.preventDefault();const n=$("nn").value.trim();if(!n)return;players.push([n,$("nt").value]);save();refresh()};
+  panel.querySelectorAll("select[data-i]").forEach(s=>s.onchange=()=>{players[+s.dataset.i][1]=s.value;save();calc();render()});
+  panel.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>{players.splice(+b.dataset.d,1);save();refresh()});
+  $("lo").onclick=()=>{admin=false;open=false;drawPanel()};
+}
+$("adm").onclick=()=>{open=!open;drawPanel();if(open)panel.scrollIntoView({block:"nearest"})};
+const vL=$("vList"),vT=$("vTier");
+function setV(v){view=v;vL.setAttribute("aria-pressed",v==="list");vT.setAttribute("aria-pressed",v==="tier");render()}
+vL.onclick=()=>setV("list");vT.onclick=()=>setV("tier");q.oninput=render;
+applyTheme(curTheme);calc();render();pull();
+</script>
+</body>
+</html>
